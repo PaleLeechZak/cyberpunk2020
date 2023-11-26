@@ -79,8 +79,35 @@ export class CyberpunkActor extends Actor {
 
     // Reflex is affected by encumbrance values too
     stats.ref.armorMod = 0;
-    equippedItems.filter(i => i.type === "armor").forEach(armor => {
+
+    const armorDifs = new Map([
+      [4, 5],
+      [8, 4],
+      [14, 3],
+      [20, 2],
+      [26, 1],
+      //[27, 0] // Implied by implementation currently. May need to uncomment if it proves necessary.
+    ]);
+
+    function getArmorDifferenceAddon(currentArmor, nextArmor) {
+      var greaterArmor = currentArmor > nextArmor ? currentArmor : nextArmor;
+      const armorDif = Math.abs(nextArmor - currentArmor);
+
+      if(currentArmor === 0 || nextArmor === 0) {
+        return greaterArmor;
+      }
+
+      for(let armorTableKey of armorDifs.keys()) {
+        if(armorDif <= armorTableKey) return greaterArmor + armorDifs.get(armorTableKey);
+      }
+
+      return greaterArmor;
+    }
+
+    let armors = equippedItems.filter(i => i.type === "armor");
+    armors.forEach((armor, index) => {
       let armorData = armor.system;
+
       if(armorData.encumbrance != null) {
         stats.ref.armorMod -= armorData.encumbrance;
       }
@@ -90,7 +117,7 @@ export class CyberpunkActor extends Actor {
         let location = system.hitLocations[armorArea];
         if(location !== undefined) {
           armorArea = armorData.coverage[armorArea];
-          location.stoppingPower += armorArea.stoppingPower;
+          location.stoppingPower = getArmorDifferenceAddon(location.stoppingPower, armorArea.stoppingPower);
         }
       }
     });

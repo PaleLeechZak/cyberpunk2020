@@ -190,8 +190,8 @@
   "gridUnits": "m",
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
-  "url": "https://github.com/OctarineSourcerer/cyberpunk2020",
-  "manifest": "https://raw.githubusercontent.com/OctarineSourcerer/cyberpunk2020/main/system.json",
-  "download": "https://github.com/OctarineSourcerer/cyberpunk2020/archive/v0.3.8.zip"
+  "url": "https://github.com/PaleLeechZak/cyberpunk2020",
+  "manifest": "https://raw.githubusercontent.com/PaleLeechZak/cyberpunk2020/main/system.json",
+  "download": "https://github.com/PaleLeechZak/cyberpunk2020/archive/v0.3.8_custom.zip"
 }
   
